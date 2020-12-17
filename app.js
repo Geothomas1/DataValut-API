@@ -50,13 +50,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
-// // set secret variable
-// app.set('secret', 'thisismysecret');
-// app.use(expressJWT({
-// 	secret: 'thisismysecret'
-// }).unless({
-// 	path: ['/users', '/metrics']
-// }));
+//set secret variable
+ app.set('secret', 'thisismysecret');
+//  app.use(expressJWT({
+//  	secret: 'thisismysecret'
+//  }).unless({
+//  	path: ['/users', '/metrics']
+//  }));
 // app.use(bearerToken());
 // app.use(function (req, res, next) {
 // 	logger.debug(' ------>>>>>> new request for %s', req.originalUrl);
