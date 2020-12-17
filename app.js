@@ -39,9 +39,11 @@ var invoke = require('./app/invoke-transaction.js');
 var query = require('./app/query.js');
 var host = process.env.HOST || hfc.getConfigSetting('host');
 var port = process.env.PORT || hfc.getConfigSetting('port');
-
+var hbs = require('express-handlebars');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/partials' }))
+
 app.options('*', cors());
 app.use(cors());
 //support parsing of application/json type post data
@@ -51,7 +53,7 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 //set secret variable
- app.set('secret', 'thisismysecret');
+app.set('secret', 'thisismysecret');
 //  app.use(expressJWT({
 //  	secret: 'thisismysecret'
 //  }).unless({
@@ -109,53 +111,55 @@ function getErrorMessage(field) {
 /* GET users listing. */
 app.get('/', function (req, res, next) {
 	res.render('index', { title: 'Decentralized Data Valut' });
-  });
-  //User login
-  app.get('/login', (req, res) => {
+});
+//User login
+app.get('/login', (req, res) => {
 	res.render('user/login')
-  })
-  //User Regisitration
-  app.get('/register', (req, res) => {
+})
+//User Regisitration
+app.get('/register', (req, res) => {
 	res.render('user/register')
-  })
-  //View Transactions
-  app.get('/transaction', (req, res) => {
+})
+//View Transactions
+app.get('/transaction', (req, res) => {
 	res.render('user/transaction')
-  })
+})
 
 
 
- app.post('/users', async function (req, res) {
- 	var username = req.body.username;
- 	var orgName = req.body.orgName;
- 	logger.debug('End point : /users');
- 	logger.debug('User name : ' + username);
- 	logger.debug('Org name  : ' + orgName);
- 	if (!username) {
- 		res.json(getErrorMessage('\'username\''));
- 		return;
- 	}
- 	if (!orgName) {
- 		res.json(getErrorMessage('\'orgName\''));
- 		return;
- 	}
- 	var token = jwt.sign({
- 		exp: Math.floor(Date.now() / 1000) + parseInt(hfc.getConfigSetting('jwt_expiretime')),
+app.post('/users', async function (req, res) {
+	var username = req.body.username;
+	var orgName = req.body.orgName;
+	logger.debug('End point : /users');
+	logger.debug('User name : ' + username);
+	logger.debug('Org name  : ' + orgName);
+	if (!username) {
+		res.json(getErrorMessage('\'username\''));
+		return;
+	}
+	if (!orgName) {
+		res.json(getErrorMessage('\'orgName\''));
+		return;
+	}
+	var token = jwt.sign({
+		exp: Math.floor(Date.now() / 1000) + parseInt(hfc.getConfigSetting('jwt_expiretime')),
 		username: username,
- 		orgName: orgName
- 	}, app.get('secret'));
- 	let response = await helper.getRegisteredUser(username, orgName, true);
- 	logger.debug('-- returned from registering the username %s for organization %s', username, orgName);
- 	if (response && typeof response !== 'string') {
- 		logger.debug('Successfully registered the username %s for organization %s', username, orgName);
- 		response.token = token;
- 		res.json(response);
- 	} else {
- 		logger.debug('Failed to register the username %s for organization %s with::%s', username, orgName, response);
- 		res.json({ success: false, message: response });
- 	}
+		orgName: orgName
+	}, app.get('secret'));
+	let response = await helper.getRegisteredUser(username, orgName, true);
+	logger.debug('-- returned from registering the username %s for organization %s', username, orgName);
+	if (response && typeof response !== 'string') {
+		logger.debug('Successfully registered the username %s for organization %s', username, orgName);
+		response.token = token;
+		res.json(response);
+		//Render to Userhome page !
+		res.render('user/userHome')
+	} else {
+		logger.debug('Failed to register the username %s for organization %s with::%s', username, orgName, response);
+		res.json({ success: false, message: response });
+	}
 
- });
+});
 // // Create Channel
 // app.post('/channels', async function (req, res) {
 // 	logger.info('<<<<<<<<<<<<<<<<< C R E A T E  C H A N N E L >>>>>>>>>>>>>>>>>');

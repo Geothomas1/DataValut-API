@@ -23,6 +23,7 @@
     "cors": "^2.8.3",
     "express": "^4.15.2",
     "express-bearer-token": "^2.1.0",
+    "express-handlebars": "^5.2.0",
     "express-jwt": "^5.3.0",
     "express-session": "^1.15.2",
     "fabric-ca-client": "~1.4.0",
