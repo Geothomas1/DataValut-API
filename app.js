@@ -40,6 +40,7 @@ var query = require('./app/query.js');
 var host = process.env.HOST || hfc.getConfigSetting('host');
 var port = process.env.PORT || hfc.getConfigSetting('port');
 var hbs = require('express-handlebars');
+var session=require('express-session');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/partials' }))
@@ -151,9 +152,12 @@ app.post('/users', async function (req, res) {
 	if (response && typeof response !== 'string') {
 		logger.debug('Successfully registered the username %s for organization %s', username, orgName);
 		response.token = token;
-		res.json(response);
+		//res.json(response);
+		//console.log(response)
 		//Render to Userhome page !
-		res.render('user/userHome')
+		//req.session.token=response.token
+    
+		res.render('user/userHome',{"user":username})
 	} else {
 		logger.debug('Failed to register the username %s for organization %s with::%s', username, orgName, response);
 		res.json({ success: false, message: response });
