@@ -53,6 +53,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+app.use(express.static(path.join(__dirname, 'public')));
 //set secret variable
 app.set('secret', 'thisismysecret');
 app.use(session({ secret: "Key", cookie: { maxAge: 600000000 } }))
