@@ -127,6 +127,11 @@ app.get('/transaction', (req, res) => {
     res.render('user/transaction')
 })
 
+app.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/')
+})
+
 
 
 app.post('/users', async function(req, res) {
@@ -153,13 +158,15 @@ app.post('/users', async function(req, res) {
     if (response && typeof response !== 'string') {
         logger.debug('Successfully registered the username %s for organization %s', username, orgName);
         response.token = token;
-        req.session.token = token;
+        req.session.user = username;
+        req.session.token = response.token;
+
         //res.json(response);
         //console.log(response)
         //Render to Userhome page !
         //req.session.token=response.token
 
-        res.render('user/userHome', { "user": username, "token": req.session.token })
+        res.render('user/userHome', { "user": req.session.user, "token": req.session.token })
     } else {
         logger.debug('Failed to register the username %s for organization %s with::%s', username, orgName, response);
         res.json({ success: false, message: response });
