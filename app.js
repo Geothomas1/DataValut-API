@@ -163,6 +163,9 @@ app.post('/users', async function(req, res) {
         req.session.user = username;
         req.session.token = response.token;
 
+
+        //logger.debug(req.session.token, "Token Geo")
+
         //res.json(response);
         //console.log(response)
         //Render to Userhome page !
