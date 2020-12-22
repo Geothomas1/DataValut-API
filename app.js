@@ -41,6 +41,8 @@ var host = process.env.HOST || hfc.getConfigSetting('host');
 var port = process.env.PORT || hfc.getConfigSetting('port');
 var hbs = require('express-handlebars');
 var session = require('express-session');
+var userHelper = require('./helpers/user-helpers')
+var db = require('./config/connection')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/partials' }))
@@ -112,7 +114,16 @@ function getErrorMessage(field) {
 ///////////////////////////////////////////////////////////////////////////////
 // Register and enroll user
 
-/* GET users listing. */
+//db connection
+db.connect((err) => {
+        if (err)
+            console.log("Connection Error" + err)
+        else
+            console.log("Database connected.!")
+
+
+    })
+    /* GET users listing. */
 app.get('/', function(req, res, next) {
     res.render('index', { title: 'Decentralized Data Valut' });
 });
@@ -123,6 +134,16 @@ app.get('/login', (req, res) => {
     //User Regisitration
 app.get('/newregister', (req, res) => {
     res.render('user/newregister')
+})
+
+
+app.post('/newregister', (req, res) => {
+    userHelper.doNewRegister(req.body).then((response) => {
+        //console.log(response)
+        req.session.loggedIn = true
+        req.session.user = response.user
+        res.redirect('user/newlogin')
+    })
 })
 
 app.get('/newlogin', (req, res) => {
