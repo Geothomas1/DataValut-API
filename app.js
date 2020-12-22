@@ -121,8 +121,12 @@ app.get('/login', (req, res) => {
         res.render('user/login')
     })
     //User Regisitration
-app.get('/register', (req, res) => {
-        res.render('user/register')
+app.get('/newregister', (req, res) => {
+    res.render('user/newregister')
+})
+
+app.get('/newlogin', (req, res) => {
+        res.render('user/newlogin')
     })
     //View Transactions
 app.get('/transaction', (req, res) => {

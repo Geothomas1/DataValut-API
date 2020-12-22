@@ -1,7 +1,7 @@
 <header>
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Decentralized Data Valut</a>
+        <a class="navbar-brand" href="/" style="color:whitesmoke"><h4>Decentralized_Data_Valut</h4></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,10 +13,10 @@
 
                 {{else}}
                 <li class="nav-item active">
-                    <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/newlogin">login <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/transaction">Transactions <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/newregister">Register<span class="sr-only">(current)</span></a>
                 </li>
 
                 {{/if}}
@@ -26,12 +26,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">New Transaction <span class="sr-only">(current)</span></a>
                 </li>
-                {{else}}
-
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Register <span class="sr-only">(current)</span></a>
-                </li>
-
+                
                 {{/if}}
 
                 {{#if token}}
@@ -74,7 +69,7 @@
                     {{#if token}}
                     {{user}}
                     {{else}}
-                    Account
+                    No User Found
                     {{/if}}
                 </button>
               
