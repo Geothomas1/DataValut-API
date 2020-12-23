@@ -138,6 +138,8 @@ app.get('/newregister', (req, res) => {
 
 
 app.post('/newregister', (req, res) => {
+
+    console.log(req.body)
     userHelper.doNewRegister(req.body).then((response) => {
         //console.log(response)
         req.session.loggedIn = true
