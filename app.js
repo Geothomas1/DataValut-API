@@ -138,13 +138,13 @@ app.get('/newregister', (req, res) => {
 
 
 app.post('/newregister', (req, res) => {
-
-    console.log(req.body)
+    //console.log(req.body)
     userHelper.doNewRegister(req.body).then((response) => {
-        //console.log(response)
+        console.log(response)
         req.session.loggedIn = true
-        req.session.user = response.user
-        res.redirect('user/newlogin')
+        req.session.username = response.username
+        res.redirect('/newlogin')
+
     })
 })
 
