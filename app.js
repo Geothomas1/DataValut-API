@@ -138,12 +138,16 @@ app.get('/', function(req, res, next) {
     res.render('index', { title: 'Decentralized Data Valut' });
 });
 //User login
-app.get('/login', (req, res) => {
-        res.render('user/login')
-    })
-    //User Regisitration
+//app.get('/login', (req, res) => {
+//      res.render('user/login')
+//})
+//User Regisitration
 app.get('/newregister', (req, res) => {
     res.render('user/newregister')
+})
+
+app.get('/newlogin', (req, res) => {
+    res.render('user/newlogin')
 })
 
 
@@ -158,24 +162,19 @@ app.post('/newregister', (req, res) => {
     })
 })
 
-app.get('/newlogin', (req, res) => {
-    if (req.session.loggedIn) {
-        res.redirect('/login')
-    } else {
-        res.render('user/newlogin', { "loginErr": req.session.loginErr })
-        req.session.loginErr = false
-    }
+app.get('/networkenroll', (req, res) => {
+    res.render('user/networkenroll')
 })
 
 app.post('/newlogin', (req, res) => {
-    userHelper.doLogin(req.body).then((response) => {
+    userHelper.doNewLogin(req.body).then((response) => {
         if (response.loginStatus) {
             req.session.loggedIn = true
-            req.session.username = response.username
-            res.redirect('/login')
+            req.session.user = response.user
+            res.redirect('/networkenroll')
         } else {
             req.session.loginErr = true
-            res.redirect('/newlogin')
+            res.render('user/newlogin', { "loginErr": req.session.loginErr })
         }
     })
 
