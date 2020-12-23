@@ -116,14 +116,24 @@ function getErrorMessage(field) {
 
 //db connection
 db.connect((err) => {
-        if (err)
-            console.log("Connection Error" + err)
-        else
-            console.log("Database connected.!")
+    if (err)
+        console.log("Connection Error" + err)
+    else
+        console.log("Database connected.!")
 
 
-    })
-    /* GET users listing. */
+})
+
+//verifylogin
+const verifyLogin = (req, res, next) => {
+    if (req.session.loggedIn) {
+        next()
+    } else {
+        res.redirect('/newlogin')
+    }
+}
+
+/* GET users listing. */
 app.get('/', function(req, res, next) {
     res.render('index', { title: 'Decentralized Data Valut' });
 });
@@ -149,9 +159,30 @@ app.post('/newregister', (req, res) => {
 })
 
 app.get('/newlogin', (req, res) => {
-        res.render('user/newlogin')
+    if (req.session.loggedIn) {
+        res.redirect('/login')
+    } else {
+        res.render('user/newlogin', { "loginErr": req.session.loginErr })
+        req.session.loginErr = false
+    }
+})
+
+app.post('/newlogin', (req, res) => {
+    userHelper.doLogin(req.body).then((response) => {
+        if (response.loginStatus) {
+            req.session.loggedIn = true
+            req.session.username = response.username
+            res.redirect('/login')
+        } else {
+            req.session.loginErr = true
+            res.redirect('/newlogin')
+        }
     })
-    //View Transactions
+
+})
+
+
+//View Transactions
 app.get('/transaction', (req, res) => {
     res.render('user/transaction')
 })

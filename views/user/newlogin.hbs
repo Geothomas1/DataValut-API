@@ -6,6 +6,11 @@
 
                 <br>
                 <form method="POST" action="/newlogin">
+                    {{#if loginErr}}
+                    <div class="alert alert-danger">
+                        <strong> Incorrect Username or Password</strong>
+                    </div>
+                    {{/if}}
                     <div class="form-group">
                         <label for="Username">Username</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="usernameHelp"
