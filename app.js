@@ -162,7 +162,7 @@ app.post('/newregister', (req, res) => {
     })
 })
 
-app.get('/networkenroll', (req, res) => {
+app.get('/networkenroll', verifyLogin, (req, res) => {
     res.render('user/networkenroll')
 })
 
@@ -182,18 +182,18 @@ app.post('/newlogin', (req, res) => {
 
 
 //View Transactions
-app.get('/transaction', (req, res) => {
+app.get('/transaction', verifyLogin, (req, res) => {
     res.render('user/transaction')
 })
 
-app.get('/logout', (req, res) => {
+app.get('/logout', verifyLogin, (req, res) => {
     req.session.destroy()
     res.redirect('/newlogin')
 })
 
 
 
-app.post('/users', async function(req, res) {
+app.post('/users', verifyLogin, async function(req, res) {
     var username = req.body.username;
     var orgName = req.body.orgName;
     logger.debug('End point : /users');
