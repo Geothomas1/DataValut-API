@@ -1,7 +1,9 @@
 <header>
-  
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/" style="color:whitesmoke"><h4>Decentralized Data Valut</h4></a>
+        <a class="navbar-brand" href="/" style="color:whitesmoke">
+            <h4>Decentralized Data Valut</h4>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,7 +12,29 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 {{#if token}}
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">New Transaction <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Requests </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Revoke Data </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+                </li>
 
+                {{/if}}
+
+
+                {{#if user}}
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+                </li>
                 {{else}}
                 <li class="nav-item active">
                     <a class="nav-link" href="/newlogin">login <span class="sr-only">(current)</span></a>
@@ -21,58 +45,22 @@
 
                 {{/if}}
 
-                {{#if token}}
-
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">New Transaction <span class="sr-only">(current)</span></a>
-                </li>
-                
-                {{/if}}
-
-                {{#if token}}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Requests </a>
-                </li>
-                {{/if}}
 
 
-                {{#if token}}
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Revoke Data </a>
-                </li>
-                {{/if}}
-
-
-                {{#if token}}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Transactions</a>
-                </li>
-
-                {{/if}}
-
-                 {{#if token}}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
-                </li>
-
-                {{/if}}
 
             </ul>
 
             <div class="dropdown">
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     {{#if token}}
                     {{user}}
                     {{else}}
                     No User Found
                     {{/if}}
                 </button>
-              
+
             </div>
         </div>
     </nav>

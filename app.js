@@ -171,7 +171,7 @@ app.post('/newlogin', (req, res) => {
         if (response.loginStatus) {
             req.session.loggedIn = true
             req.session.user = response.user
-            res.redirect('/networkenroll')
+            res.render('user/networkenroll', { "user": req.session.user })
         } else {
             req.session.loginErr = true
             res.render('user/newlogin', { "loginErr": req.session.loginErr })
@@ -188,7 +188,7 @@ app.get('/transaction', (req, res) => {
 
 app.get('/logout', (req, res) => {
     req.session.destroy()
-    res.redirect('/')
+    res.redirect('/newlogin')
 })
 
 
@@ -217,7 +217,7 @@ app.post('/users', async function(req, res) {
     if (response && typeof response !== 'string') {
         logger.debug('Successfully registered the username %s for organization %s', username, orgName);
         response.token = token;
-        req.session.user = username;
+        req.session.username = username;
         req.session.token = response.token;
 
 
@@ -228,7 +228,7 @@ app.post('/users', async function(req, res) {
         //Render to Userhome page !
         //req.session.token=response.token
 
-        res.render('user/userHome', { "user": req.session.user, "token": req.session.token })
+        res.render('user/userHome', { "user": req.session.username, "token": req.session.token })
     } else {
         logger.debug('Failed to register the username %s for organization %s with::%s', username, orgName, response);
         res.json({ success: false, message: response });
