@@ -168,10 +168,11 @@ app.get('/networkenroll', verifyLogin, (req, res) => {
 
 app.post('/newlogin', (req, res) => {
     userHelper.doNewLogin(req.body).then((response) => {
+        //console.log(response.user.Username)
         if (response.loginStatus) {
             req.session.loggedIn = true
             req.session.user = response.user
-            res.render('user/networkenroll', { "user": req.session.user })
+            res.render('user/networkenroll', { "Username": response.user.Username, "OrgName": response.user.OrgName, "user": req.session.user, })
         } else {
             req.session.loginErr = true
             res.render('user/newlogin', { "loginErr": req.session.loginErr })
