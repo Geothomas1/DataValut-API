@@ -157,7 +157,7 @@ app.post('/newlogin', (req, res) => {
         if (response.loginStatus) {
             req.session.loggedIn = true
             req.session.user = response.user
-            res.render('user/networkenroll', { "Username": response.user.Username, "OrgName": response.user.OrgName, "user": req.session.user, })
+            res.render('user/networkenroll', { "Username": response.user.Username, "OrgName": response.user.OrgName, "user": req.session.user })
         } else {
             req.session.loginErr = true
             res.render('user/newlogin', { "loginErr": req.session.loginErr })
@@ -165,6 +165,7 @@ app.post('/newlogin', (req, res) => {
     })
 
 })
+
 
 
 //View Transactions
@@ -176,6 +177,8 @@ app.get('/logout', verifyLogin, (req, res) => {
     req.session.destroy()
     res.redirect('/newlogin')
 })
+
+
 
 
 
@@ -207,6 +210,7 @@ app.post('/users', verifyLogin, async function(req, res) {
         req.session.token = response.token;
 
 
+
         //logger.debug(req.session.token, "Token Geo")
 
         //res.json(response);
@@ -221,6 +225,17 @@ app.post('/users', verifyLogin, async function(req, res) {
     }
 
 });
+
+
+//add new data
+
+app.get('/adddatatovalut', verifyLogin, (req, res) => {
+    res.render('user/adddatatovalut', { "user": req.session.user, "token": req.session.token })
+})
+
+
+
+
 // // Create Channel
 // app.post('/channels', async function(req, res) {
 //     logger.info('<<<<<<<<<<<<<<<<< C R E A T E  C H A N N E L >>>>>>>>>>>>>>>>>');
