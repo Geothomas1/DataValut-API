@@ -230,7 +230,7 @@ app.post('/users', verifyLogin, async function(req, res) {
 //add new data
 
 app.get('/adddatatovalut', verifyLogin, (req, res) => {
-    res.render('user/adddatatovalut', { "user": req.session.user, "token": req.session.token })
+    res.render('user/adddatatovalut', { "user": req.session.username, "token": req.session.token })
 })
 
 
