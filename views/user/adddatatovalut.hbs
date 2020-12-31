@@ -24,9 +24,10 @@
     <input type="phone" class="form-control" id="Phone" placeholder="Phone" name="Phone">
   </div>
   <div class="form-row">
-   
-   <input type="hidden" name="Username" value="">
-   <input type="hidden" name="Peer1" value="">
+
+   <input type="hidden" name="fcn" value="createDatavalut">
+   <input type="hidden" name="chaincodeName" value="datavalut">
+   <input type="hidden" name="channelName" value="mychannel">
    
     
   </div>
@@ -37,3 +38,18 @@
         </div>
     </div>
 </section>
+
+<script>
+
+function adddatatovalut(){
+  console.log("Data to Datavalut....")
+  $.ajax{
+    url:'/channels/:channelName/chaincodes/:chaincodeName',
+    method:'POST',
+    
+
+
+  }
+}
+
+</script>

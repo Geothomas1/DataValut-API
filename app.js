@@ -363,10 +363,11 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 //     try {
 //         logger.debug('==================== INVOKE ON CHAINCODE ==================');
 //         var peers = req.body.peers;
-//         var chaincodeName = req.params.chaincodeName;
-//         var channelName = req.params.channelName;
-//         var fcn = req.body.fcn;
 //         var args = req.body.args;
+//         var chaincodeName = req.body.chaincodeName;
+//         var channelName = req.body.channelName;
+//         var fcn = req.body.fcn;
+//         
 //         logger.debug('channelName  : ' + channelName);
 //         logger.debug('chaincodeName : ' + chaincodeName);
 //         logger.debug('fcn  : ' + fcn);
