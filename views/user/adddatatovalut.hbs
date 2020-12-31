@@ -1,55 +1,71 @@
 <section>
-    <div class="row">
-        <div class="col-md-6 m-auto">
-            <div class="container mt-5 pl-5">
-                <h2>Add Data to DataValut</h2>
-                <br>
-                <form>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputid">Id</label>
-      <input type="text" class="form-control" id="Id" placeholder="Id" name="Id">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputdataid">Data Id</label>
-      <input type="text" class="form-control" id="Data_Id" placeholder="Data Id" name="Data_Id">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputemail">Email</label>
-    <input type="email" class="form-control" id="Email" placeholder="Email" name="Email">
-  </div>
-  <div class="form-group">
-    <label for="inputphone">Phone Number</label>
-    <input type="phone" class="form-control" id="Phone" placeholder="Phone" name="Phone">
-  </div>
-  <div class="form-row">
-
-   <input type="hidden" name="fcn" value="createDatavalut">
-   <input type="hidden" name="chaincodeName" value="datavalut">
-   <input type="hidden" name="channelName" value="mychannel">
-   
-    
-  </div>
- 
-  <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
+  <div class="row">
+    <div class="col-md-6 m-auto">
+      <div class="container mt-5 pl-5">
+        <h2>Add Data to DataValut</h2>
+        <br>
+        <form method="POST" action="/channels/:channelName/chaincodes/:chaincodeName"> 
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputid">Id</label>
+              <input type="text" class="form-control" id="Id" placeholder="Id" name="Id">
             </div>
-        </div>
+            <div class="form-group col-md-6">
+              <label for="inputdataid">Data Id</label>
+              <input type="text" class="form-control" id="Data_Id" placeholder="Data Id" name="Data_Id">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputemail">Email</label>
+            <input type="email" class="form-control" id="Email" placeholder="Email" name="Email">
+          </div>
+          <div class="form-group">
+            <label for="inputphone">Phone Number</label>
+            <input type="phone" class="form-control" id="Phone" placeholder="Phone" name="Phone">
+          </div>
+          <div class="form-row">
+
+            <input type="hidden" name="fcn" id="fcn" value="createDatavalut">
+            <input type="hidden" name="chaincodeName" id="chaincodeName" value="datavalut">
+            <input type="hidden" name="channelName" id="channelName" value="mychannel">
+
+
+          </div>
+
+          <button type="submit" class="btn btn-primary" >Sign in</button>
+        </form>
+      </div>
     </div>
+  </div>
 </section>
 
 <script>
 
-function adddatatovalut(){
-  console.log("Data to Datavalut....")
-  $.ajax{
-    url:'/channels/:channelName/chaincodes/:chaincodeName',
-    method:'POST',
-    
+  function adddatatovalut() {
+    console.log("Data to Datavalut....")
+    data = {
+      Id: document.getElementById("Id").value,
+      Data_id: document.getElementById("Data_Id").value,
+      Email: document.getElementById("Email").value,
+      Phone: document.getElementById("Phone").value,
+      fcn: document.getElementById("fcn").value,
+      channelName: document.getElementById("channelName").value,
+      chaincodeName: document.getElementById("chaincodeName").value
+    };
 
 
+    $.ajax({
+      url: '/channels/:channelName/chaincodes/:chaincodeName',
+      data: data,
+      method: 'post',
+      success: (response) => {
+
+        alert(response)
+
+      }
+
+
+    })
   }
-}
 
 </script>
