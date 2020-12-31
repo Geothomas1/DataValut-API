@@ -362,7 +362,11 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 // // Invoke transaction on chaincode on target psudo apt-get dist-upgradeeers
 app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req, res, next) {
     console.log(req.body)
-    console.log(req.session.username)
+        //console.log(req.session.username)
+    const args = [req.body.Id, req.body.Data_Id, req.body.Email, req.body.Phone, req.session.username]
+    const peers = [req.body.peer0, req.body.peer1]
+    console.log(args)
+    console.log(peers)
 
     //     try {
     //         logger.debug('==================== INVOKE ON CHAINCODE ==================');

@@ -4,7 +4,7 @@
       <div class="container mt-5 pl-5">
         <h2>Add Data to DataValut</h2>
         <br>
-        <form method="POST" action="/channels/:channelName/chaincodes/:chaincodeName"> 
+        <form method="POST" action="/channels/:channelName/chaincodes/:chaincodeName">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputid">Id</label>
@@ -28,44 +28,17 @@
             <input type="hidden" name="fcn" id="fcn" value="createDatavalut">
             <input type="hidden" name="chaincodeName" id="chaincodeName" value="datavalut">
             <input type="hidden" name="channelName" id="channelName" value="mychannel">
+            <input type="hidden" name="peer0" id="peer0" value="peer0.org1.example.com">
+            <input type="hidden" name="peer1" id="peer1" value="peer0.org2.example.com">
+
+
 
 
           </div>
 
-          <button type="submit" class="btn btn-primary" >Sign in</button>
+          <button type="submit" class="btn btn-primary">Sign in</button>
         </form>
       </div>
     </div>
   </div>
 </section>
-
-<script>
-
-  function adddatatovalut() {
-    console.log("Data to Datavalut....")
-    data = {
-      Id: document.getElementById("Id").value,
-      Data_id: document.getElementById("Data_Id").value,
-      Email: document.getElementById("Email").value,
-      Phone: document.getElementById("Phone").value,
-      fcn: document.getElementById("fcn").value,
-      channelName: document.getElementById("channelName").value,
-      chaincodeName: document.getElementById("chaincodeName").value
-    };
-
-
-    $.ajax({
-      url: '/channels/:channelName/chaincodes/:chaincodeName',
-      data: data,
-      method: 'post',
-      success: (response) => {
-
-        alert(response)
-
-      }
-
-
-    })
-  }
-
-</script>
