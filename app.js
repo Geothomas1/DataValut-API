@@ -45,38 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //set secret variable
 app.set('secret', 'thisismysecret');
 app.use(session({ secret: "Key", cookie: { maxAge: 600000000 } }))
-    // app.use(expressJWT({
-    //     secret: 'thisismysecret'
-    // }).unless({
-    //     path: ['/users', '/metrics']
-    // }));
-    // app.use(bearerToken());
-    // app.use(function(req, res, next) {
-    //     logger.debug(' ------>>>>>> new request for %s', req.originalUrl);
-    //     if (req.originalUrl.indexOf('/users') >= 0 || req.originalUrl.indexOf('/metrics') >= 0) {
-    //         return next();
-    //     }
 
-//     var token = req.token;
-//     jwt.verify(token, app.get('secret'), function(err, decoded) {
-//         if (err) {
-//             res.send({
-//                 success: false,
-//                 message: 'Failed to authenticate token. Make sure to include the ' +
-//                     'token returned from /users call in the authorization header ' +
-//                     ' as a Bearer token'
-//             });
-//             return;
-//         } else {
-//             // add the decoded user name and org name to the request object
-//             // for the downstream code to use
-//             req.username = decoded.username;
-//             req.orgname = decoded.orgName;
-//             logger.debug(util.format('Decoded from JWT token: username - %s, orgname - %s', decoded.username, decoded.orgName));
-//             return next();
-//         }
-//     });
-// });
 
 ///////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// START SERVER /////////////////////////////////
@@ -235,7 +204,38 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 })
 
 
+app.use(expressJWT({
+    secret: 'thisismysecret'
+}).unless({
+    path: ['/users', '/metrics']
+}));
+app.use(bearerToken());
+app.use(function(req, res, next) {
+    logger.debug(' ------>>>>>> new request for %s', req.originalUrl);
+    if (req.originalUrl.indexOf('/users') >= 0 || req.originalUrl.indexOf('/metrics') >= 0) {
+        return next();
+    }
 
+    var token = req.token;
+    jwt.verify(token, app.get('secret'), function(err, decoded) {
+        if (err) {
+            res.send({
+                success: false,
+                message: 'Failed to authenticate token. Make sure to include the ' +
+                    'token returned from /users call in the authorization header ' +
+                    ' as a Bearer token'
+            });
+            return;
+        } else {
+            // add the decoded user name and org name to the request object
+            // for the downstream code to use
+            req.username = decoded.username;
+            req.orgname = decoded.orgName;
+            logger.debug(util.format('Decoded from JWT token: username - %s, orgname - %s', decoded.username, decoded.orgName));
+            return next();
+        }
+    });
+});
 
 // // Create Channel
 // app.post('/channels', async function(req, res) {
@@ -366,7 +366,7 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
     const arg = [req.body.Id, req.body.Data_Id, req.body.Email, req.body.Phone, req.session.username]
     const peer = [req.body.peer0, req.body.peer1]
     console.log(arg)
-    console.log(peers)
+    console.log(peer)
 
     try {
         logger.debug('==================== INVOKE ON CHAINCODE ==================');
