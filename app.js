@@ -363,60 +363,61 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req, res, next) {
     console.log(req.body)
         //console.log(req.session.username)
-    const args = [req.body.Id, req.body.Data_Id, req.body.Email, req.body.Phone, req.session.username]
-    const peers = [req.body.peer0, req.body.peer1]
-    console.log(args)
+    const arg = [req.body.Id, req.body.Data_Id, req.body.Email, req.body.Phone, req.session.username]
+    const peer = [req.body.peer0, req.body.peer1]
+    console.log(arg)
     console.log(peers)
 
-    //     try {
-    //         logger.debug('==================== INVOKE ON CHAINCODE ==================');
-    //         var peers = req.body.peers;
-    //         var args = req.body.args;
-    //         var chaincodeName = req.body.chaincodeName;
-    //         var channelName = req.body.channelName;
-    //         var fcn = req.body.fcn;
-    //         
-    //         logger.debug('channelName  : ' + channelName);
-    //         logger.debug('chaincodeName : ' + chaincodeName);
-    //         logger.debug('fcn  : ' + fcn);
-    //         logger.debug('args  : ' + args);
-    //         if (!chaincodeName) {
-    //             res.json(getErrorMessage('\'chaincodeName\''));
-    //             return;
-    //         }
-    //         if (!channelName) {
-    //             res.json(getErrorMessage('\'channelName\''));
-    //             return;
-    //         }
-    //         if (!fcn) {
-    //             res.json(getErrorMessage('\'fcn\''));
-    //             return;
-    //         }
-    //         if (!args) {
-    //             res.json(getErrorMessage('\'args\''));
-    //             return;
-    //         }
+    try {
+        logger.debug('==================== INVOKE ON CHAINCODE ==================');
+        var peers = peer
+        var args = arg
+        var chaincodeName = req.body.chaincodeName;
+        var channelName = req.body.channelName;
+        var fcn = req.body.fcn;
 
-    //         const start = Date.now();
-    //         let message = await invoke.invokeChaincode(peers, channelName, chaincodeName, fcn, args, req.username, req.orgname);
-    //         const latency = Date.now() - start;
+        logger.debug('channelName  : ' + channelName);
+        logger.debug('chaincodeName : ' + chaincodeName);
+        logger.debug('fcn  : ' + fcn);
+        logger.debug('args  : ' + args);
+        if (!chaincodeName) {
+            res.json(getErrorMessage('\'chaincodeName\''));
+            return;
+        }
+        if (!channelName) {
+            res.json(getErrorMessage('\'channelName\''));
+            return;
+        }
+        if (!fcn) {
+            res.json(getErrorMessage('\'fcn\''));
+            return;
+        }
+        if (!args) {
+            res.json(getErrorMessage('\'args\''));
+            return;
+        }
+
+        //         const start = Date.now();
+        //         let message = await invoke.invokeChaincode(peers, channelName, chaincodeName, fcn, args, req.username, req.orgname);
+        //         const latency = Date.now() - start;
 
 
-    //         const response_payload = {
-    //             result: message,
-    //             error: null,
-    //             errorData: null
-    //         }
-    //         res.send(response_payload);
+        //         const response_payload = {
+        //             result: message,
+        //             error: null,
+        //             errorData: null
+        //         }
+        //         res.send(response_payload);
 
-    //     } catch (error) {
-    //         const response_payload = {
-    //             result: null,
-    //             error: error.name,
-    //             errorData: error.message
-    //         }
-    //         res.send(response_payload)
-    //     }
+    } catch (error) {
+        const response_payload = {
+            result: null,
+            error: error.name,
+            errorData: error.message
+        }
+        res.send(response_payload)
+    }
+
 });
 
 
