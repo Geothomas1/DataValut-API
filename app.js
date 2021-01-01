@@ -1,5 +1,5 @@
 'use strict';
-import swal from 'sweetalert';
+
 var log4js = require('log4js');
 var logger = log4js.getLogger('SampleWebApp');
 var express = require('express');

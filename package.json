@@ -36,6 +36,7 @@
     "mongoclient": "^1.0.3",
     "prom-client": "^11.5.3",
     "promise": "^8.1.0",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^10.12.6"
   }
 }
