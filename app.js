@@ -1,4 +1,5 @@
 'use strict';
+import swal from 'sweetalert';
 var log4js = require('log4js');
 var logger = log4js.getLogger('SampleWebApp');
 var express = require('express');
@@ -177,6 +178,7 @@ app.post('/users', verifyLogin, async function(req, res) {
         response.token = token;
         req.session.username = username;
         req.session.token = response.token;
+        req.session.orgName = orgName;
 
 
 
@@ -204,11 +206,11 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 })
 
 
-app.use(expressJWT({
-    secret: 'thisismysecret'
-}).unless({
-    path: ['/users', '/metrics']
-}));
+// app.use(expressJWT({
+//     secret: 'thisismysecret'
+// }).unless({
+//     path: ['/users', '/metrics']
+// }));
 
 
 // app.use(bearerToken());
@@ -369,8 +371,8 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
         //console.log(req.session.username)
     const arg = [req.body.Id, req.body.Data_Id, req.body.Email, req.body.Phone, req.session.username]
     const peer = [req.body.peer0, req.body.peer1]
-    console.log(arg)
-    console.log(peer)
+        //console.log(arg)
+        //console.log(peer)
 
     try {
         logger.debug('==================== INVOKE ON CHAINCODE ==================');
@@ -379,7 +381,10 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
         var chaincodeName = req.body.chaincodeName;
         var channelName = req.body.channelName;
         var fcn = req.body.fcn;
-
+        var username = req.session.username;
+        var orgName = req.session.orgName;
+        logger.debug('Username:' + username);
+        logger.debug('OrgName:' + orgName);
         logger.debug('channelName  : ' + channelName);
         logger.debug('chaincodeName : ' + chaincodeName);
         logger.debug('fcn  : ' + fcn);
@@ -401,17 +406,17 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
             return;
         }
 
-        //         const start = Date.now();
-        //         let message = await invoke.invokeChaincode(peers, channelName, chaincodeName, fcn, args, req.username, req.orgname);
-        //         const latency = Date.now() - start;
+        const start = Date.now();
+        let message = await invoke.invokeChaincode(peers, channelName, chaincodeName, fcn, args, username, orgName);
+        const latency = Date.now() - start;
 
 
-        //         const response_payload = {
-        //             result: message,
-        //             error: null,
-        //             errorData: null
-        //         }
-        //         res.send(response_payload);
+        const response_payload = {
+            result: message,
+            error: null,
+            errorData: null
+        }
+        res.send(response_payload);
 
     } catch (error) {
         const response_payload = {
