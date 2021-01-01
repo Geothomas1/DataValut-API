@@ -29,6 +29,8 @@ var hbs = require('express-handlebars');
 var session = require('express-session');
 var userHelper = require('./helpers/user-helpers')
 var db = require('./config/connection')
+const Swal = require('sweetalert2')
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/partials' }))
@@ -242,23 +244,29 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 // });
 
 
-
-// // Create Channel
-// app.post('/channels', async function(req, res) {
-//     logger.info('<<<<<<<<<<<<<<<<< C R E A T E  C H A N N E L >>>>>>>>>>>>>>>>>');
-//     logger.debug('End point : /channels');
-//     var channelName = req.body.channelName;
-//     var channelConfigPath = req.body.channelConfigPath;
-//     logger.debug('Channel name : ' + channelName);
-//     logger.debug('channelConfigPath : ' + channelConfigPath); //../artifacts/channel/mychannel.tx
-//     if (!channelName) {
-//         res.json(getErrorMessage('\'channelName\''));
-//         return;
-//     }
-//     if (!channelConfigPath) {
-//         res.json(getErrorMessage('\'channelConfigPath\''));
-//         return;
-//     }
+Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+    })
+    // // Create Channel
+    // app.post('/channels', async function(req, res) {
+    //     logger.info('<<<<<<<<<<<<<<<<< C R E A T E  C H A N N E L >>>>>>>>>>>>>>>>>');
+    //     logger.debug('End point : /channels');
+    //     var channelName = req.body.channelName;
+    //     var channelConfigPath = req.body.channelConfigPath;
+    //     logger.debug('Channel name : ' + channelName);
+    //     logger.debug('channelConfigPath : ' + channelConfigPath); //../artifacts/channel/mychannel.tx
+    //     if (!channelName) {
+    //         res.json(getErrorMessage('\'channelName\''));
+    //         return;
+    //     }
+    //     if (!channelConfigPath) {
+    //         res.json(getErrorMessage('\'channelConfigPath\''));
+    //         return;
+    //     }
 
 //     let message = await createChannel.createChannel(channelName, channelConfigPath, req.username, req.orgname);
 //     res.send(message);
@@ -416,6 +424,7 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
             error: null,
             errorData: null
         }
+
         res.send(response_payload);
 
     } catch (error) {
