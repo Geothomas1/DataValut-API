@@ -424,9 +424,9 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
             error: null,
             errorData: null
         }
-        res.render('user/adddatasuccess', { 'result': response_payload })
-
-        //res.send(response_payload);
+        res.render('user/adddatasuccess', { 'result': response_payload, 'user': req.session.username, 'token': req.session.token })
+        console.log(response_payload)
+            //res.send(response_payload);
 
     } catch (error) {
         const response_payload = {
@@ -434,8 +434,9 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
             error: error.name,
             errorData: error.message
         }
-        res.render('user/adddataerror', { 'result': response_payload })
+        res.render('user/adddataerror', { 'result': response_payload, 'user': req.session.username, 'token': req.session.token })
             //res.send(response_payload);
+
     }
 
 });
