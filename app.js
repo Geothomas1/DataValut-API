@@ -497,20 +497,27 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
 //     res.send(message);
 // });
 
-// // Query Get Transaction by Transaction ID
-// app.get('/channels/:channelName/transactions/:trxnId', async function(req, res) {
-//     logger.debug('================ GET TRANSACTION BY TRANSACTION_ID ======================');
-//     logger.debug('channelName : ' + req.params.channelName);
-//     let trxnId = req.params.trxnId;
-//     let peer = req.query.peer;
-//     if (!trxnId) {
-//         res.json(getErrorMessage('\'trxnId\''));
-//         return;
-//     }
+app.get('/getTransactionByID', (req, res) => {
+    console.log("=================GET Transaction BY ID =============================")
+    res.render('user/getTransactionByID')
+})
 
-//     let message = await query.getTransactionByID(peer, req.params.channelName, trxnId, req.username, req.orgname);
-//     res.send(message);
-// });
+
+
+// Query Get Transaction by Transaction ID
+app.get('/channels/:channelName/transactions/:trxnId', async function(req, res) {
+    logger.debug('================ GET TRANSACTION BY TRANSACTION_ID ======================');
+    logger.debug('channelName : ' + req.params.channelName);
+    let trxnId = req.params.trxnId;
+    let peer = req.query.peer;
+    if (!trxnId) {
+        res.json(getErrorMessage('\'trxnId\''));
+        return;
+    }
+
+    let message = await query.getTransactionByID(peer, req.params.channelName, trxnId, req.username, req.orgname);
+    res.send(message);
+});
 // // Query Get Block by Hash
 // app.get('/channels/:channelName/blocks', async function(req, res) {
 //     logger.debug('================ GET BLOCK BY HASH ======================');
