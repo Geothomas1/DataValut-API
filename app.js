@@ -424,6 +424,8 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
             error: null,
             errorData: null
         }
+
+        req.session.getTransactionByID = response_payload.result.tx_id;
         res.render('user/adddatasuccess', { 'result': response_payload, 'user': req.session.username, 'token': req.session.token })
         console.log(response_payload)
             //res.send(response_payload);
@@ -434,6 +436,7 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
             error: error.name,
             errorData: error.message
         }
+
         res.render('user/adddataerror', { 'result': response_payload, 'user': req.session.username, 'token': req.session.token })
             //res.send(response_payload);
 
@@ -499,7 +502,7 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
 
 app.get('/getTransactionByID', (req, res) => {
     console.log("=================GET Transaction BY ID =============================")
-    res.render('user/getTransactionByID')
+    res.render('user/getTransactionByID', { 'user': req.session.username, 'token': req.session.token, 'txt_id': req.session.getTransactionByID })
 })
 
 
@@ -507,15 +510,15 @@ app.get('/getTransactionByID', (req, res) => {
 // Query Get Transaction by Transaction ID
 app.get('/channels/:channelName/transactions/:trxnId', async function(req, res) {
     logger.debug('================ GET TRANSACTION BY TRANSACTION_ID ======================');
-    logger.debug('channelName : ' + req.params.channelName);
-    let trxnId = req.params.trxnId;
-    let peer = req.query.peer;
+    logger.debug('channelName : ' + req.body.channelName);
+    let trxnId = req.session.getTransactionByID;
+    let peer = req.body.peer;
     if (!trxnId) {
         res.json(getErrorMessage('\'trxnId\''));
         return;
     }
 
-    let message = await query.getTransactionByID(peer, req.params.channelName, trxnId, req.username, req.orgname);
+    let message = await query.getTransactionByID(peer, req.body.channelName, trxnId, req.session.username, req.session.orgName);
     res.send(message);
 });
 // // Query Get Block by Hash

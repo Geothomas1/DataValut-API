@@ -2,11 +2,14 @@
     <div class="col-md-6 m-auto">
         <div class="container mt-5 pl-5">
             <h2>Transaction_By_Id</h2>
-            <form action="/users" method="GET">
+            <form action="/channels/:channelName/transactions/:trxnId" method="GET">
                 <div class="form-group">
-                    <label for="txt_id">Organization</label>
-                    <input class="form-control" type="text" value="{{result.result.tx_id}}" readonly name="txt_id">
+                    <label for="txt_id">Transaction_Id</label>
+                    <input class="form-control" type="text" value="{{txt_id}}" readonly name="txt_id">
                 </div>
+            <input type="hidden" name="chaincodeName" id="chaincodeName" value="datavalut">
+            <input type="hidden" name="channelName" id="channelName" value="mychannel">
+            <input type="hidden" name="peer" id="peer" value="peer0.org1.example.com">
                 
 
                 <button type="submit" class="btn btn-success float-right" >Get Result</button>
