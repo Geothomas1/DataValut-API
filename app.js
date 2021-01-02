@@ -370,7 +370,11 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 //     let message = await instantiate.instantiateChaincode(peers, channelName, chaincodeName, chaincodeVersion, chaincodeType, fcn, args, req.username, req.orgname);
 //     res.send(message);
 // });
+app.get('/getHistoryForAsset', (req, res) => {
+    console.log("=================getHistoryofData=====================")
+    res.render('user/getHistoryForAsset', { "user": req.session.username, "token": req.session.token })
 
+})
 
 
 // // Invoke transaction on chaincode on target psudo apt-get dist-upgradeeers
@@ -445,7 +449,7 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
 });
 
 
-// // Query on chaincode on target peers
+// Query on chaincode on target peers
 // app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, res) {
 //     logger.debug('==================== QUERY BY CHAINCODE ==================');
 //     var channelName = req.params.channelName;

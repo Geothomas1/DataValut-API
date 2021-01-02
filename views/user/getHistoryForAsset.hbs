@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-6 m-auto">
+        <div class="container mt-5 pl-5">
+            <h2>Get_History_Of_Data</h2>
+            <form action="/channels/:channelName/transactions/:trxnId" method="GET">
+                <div class="form-group">
+                    <label for="txt_id">Data_Id</label>
+                    <input class="form-control" type="text" value="" readonly name="txt_id">
+                </div>
+            <input type="hidden" name="chaincodeName" id="chaincodeName" value="datavalut">
+            <input type="hidden" name="channelName" id="channelName" value="mychannel">
+            <input type="hidden" name="peer" id="peer" value="peer0.org1.example.com">
+                
+
+                <button type="submit" class="btn btn-warning float-right" >Get History</button>
+            </form>
+        </div>
+    </div>
+</div>
