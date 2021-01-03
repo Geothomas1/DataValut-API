@@ -370,11 +370,7 @@ app.get('/adddatatovalut', verifyLogin, (req, res) => {
 //     let message = await instantiate.instantiateChaincode(peers, channelName, chaincodeName, chaincodeVersion, chaincodeType, fcn, args, req.username, req.orgname);
 //     res.send(message);
 // });
-app.get('/getHistoryForAsset', (req, res) => {
-    console.log("=================getHistoryofData=====================")
-    res.render('user/getHistoryForAsset', { "user": req.session.username, "token": req.session.token })
 
-})
 
 
 // // Invoke transaction on chaincode on target psudo apt-get dist-upgradeeers
@@ -448,44 +444,50 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
 
 });
 
+//Get the histrory of Data
+app.get('/getHistoryForData', (req, res) => {
+    console.log("=================getHistoryofData=====================")
+    res.render('user/getHistoryForAsset', { "user": req.session.username, "token": req.session.token })
 
-// Query on chaincode on target peers
-// app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, res) {
-//     logger.debug('==================== QUERY BY CHAINCODE ==================');
-//     var channelName = req.params.channelName;
-//     var chaincodeName = req.params.chaincodeName;
-//     let args = req.query.args;
-//     let fcn = req.query.fcn;
-//     let peer = req.query.peer;
+})
 
-//     logger.debug('channelName : ' + channelName);
-//     logger.debug('chaincodeName : ' + chaincodeName);
-//     logger.debug('fcn : ' + fcn);
-//     logger.debug('args : ' + args);
+//Query on chaincode on target peers
+app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, res) {
+    logger.debug('==================== QUERY BY CHAINCODE ==================');
+    var channelName = req.params.channelName;
+    var chaincodeName = req.params.chaincodeName;
+    let args = req.query.args;
+    let fcn = req.query.fcn;
+    let peer = req.query.peer;
 
-//     if (!chaincodeName) {
-//         res.json(getErrorMessage('\'chaincodeName\''));
-//         return;
-//     }
-//     if (!channelName) {
-//         res.json(getErrorMessage('\'channelName\''));
-//         return;
-//     }
-//     if (!fcn) {
-//         res.json(getErrorMessage('\'fcn\''));
-//         return;
-//     }
-//     if (!args) {
-//         res.json(getErrorMessage('\'args\''));
-//         return;
-//     }
-//     args = args.replace(/'/g, '"');
-//     args = JSON.parse(args);
-//     logger.debug(args);
+    logger.debug('channelName : ' + channelName);
+    logger.debug('chaincodeName : ' + chaincodeName);
+    logger.debug('fcn : ' + fcn);
+    logger.debug('args : ' + args);
 
-//     let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.username, req.orgname);
-//     res.send(message);
-// });
+    if (!chaincodeName) {
+        res.json(getErrorMessage('\'chaincodeName\''));
+        return;
+    }
+    if (!channelName) {
+        res.json(getErrorMessage('\'channelName\''));
+        return;
+    }
+    if (!fcn) {
+        res.json(getErrorMessage('\'fcn\''));
+        return;
+    }
+    if (!args) {
+        res.json(getErrorMessage('\'args\''));
+        return;
+    }
+    args = args.replace(/'/g, '"');
+    args = JSON.parse(args);
+    logger.debug(args);
+
+    let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.username, req.orgname);
+    res.send(message);
+});
 
 // //  Query Get Block by BlockNumber
 // app.get('/channels/:channelName/blocks/:blockId', async function(req, res) {
