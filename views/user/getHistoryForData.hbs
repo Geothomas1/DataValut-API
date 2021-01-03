@@ -2,17 +2,18 @@
     <div class="col-md-6 m-auto">
         <div class="container mt-5 pl-5">
             <h2>Get_History_Of_Data</h2>
-            <form action="/channels/:channelName/chaincodes/:chaincodeName" method="GET">
+            <form action='/channels/:channelName/chaincodes/:chaincodeName' method="GET">
                 <div class="form-group">
-                    <label for="txt_id">Data_Id</label>
-                    <input class="form-control" type="text" value=""  name="Id">
+                    <label for="Data_Id">Data_Id</label>
+                    <input class="form-control" type="text"  name="args[]" id="args">
                 </div>
-            <input type="hidden" name="chaincodeName" id="chaincodeName" value="datavalut">
-            <input type="hidden" name="channelName" id="channelName" value="mychannel">
-            <input type="hidden" name="peer" id="peer" value="peer0.org1.example.com">
-                
+                <input type="hidden" name="chaincodeName" id="chaincodeName" value="datavalut">
+                <input type="hidden" name="channelName" id="channelName" value="mychannel">
+                <input type="hidden" name="peer" id="peer" value="peer0.org1.example.com">
+                <input type="hidden" name="fcn" id="fcn" value="getHistoryForAsset">
 
-                <button type="submit" class="btn btn-warning float-right" >Get History</button>
+
+                <button type="submit" class="btn btn-warning float-right">Get History</button>
             </form>
         </div>
     </div>

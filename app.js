@@ -29,7 +29,8 @@ var hbs = require('express-handlebars');
 var session = require('express-session');
 var userHelper = require('./helpers/user-helpers')
 var db = require('./config/connection')
-const Swal = require('sweetalert2')
+const Swal = require('sweetalert2');
+const { json } = require('body-parser');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -54,7 +55,7 @@ app.use(session({ secret: "Key", cookie: { maxAge: 600000000 } }))
 //////////////////////////////// START SERVER /////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 var server = http.createServer(app).listen(port, function() {});
-logger.info('****************** SERVER STARTED ************************');
+logger.info('******************DATA VALUT SERVER STARTED ************************');
 logger.info('***************  http://%s:%s  ******************', host, port);
 server.timeout = 240000;
 
@@ -447,19 +448,19 @@ app.post('/channels/:channelName/chaincodes/:chaincodeName', async function(req,
 //Get the histrory of Data
 app.get('/getHistoryForData', (req, res) => {
     console.log("=================getHistoryofData=====================")
-    res.render('user/getHistoryForAsset', { "user": req.session.username, "token": req.session.token })
+    res.render('user/getHistoryForData', { "user": req.session.username, "token": req.session.token })
 
 })
 
 //Query on chaincode on target peers
 app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, res) {
     logger.debug('==================== QUERY BY CHAINCODE ==================');
-    var channelName = req.body.channelName;
-    var chaincodeName = req.body.chaincodeName;
-    let args = req.body.Id; //args as Id
-    let fcn = req.body.fcn;
-    let peer = req.body.peer;
-
+    console.log(req.query);
+    var channelName = req.query.channelName;
+    var chaincodeName = req.query.chaincodeName;
+    let args = req.query.args; //args as Id
+    let fcn = req.query.fcn;
+    let peer = req.query.peer;
     logger.debug('channelName : ' + channelName);
     logger.debug('chaincodeName : ' + chaincodeName);
     logger.debug('fcn : ' + fcn);
@@ -481,12 +482,15 @@ app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, 
         res.json(getErrorMessage('\'args\''));
         return;
     }
-    args = args.replace(/'/g, '"');
-    args = JSON.parse(args);
-    logger.debug(args);
+    console.log(typeof(args))
 
-    let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.session.username, req.session.orgName);
-    res.send(message);
+    //args = args.replace(/'/g, '"');
+    //console.log(args)
+    //args = json.parse(args);
+    // logger.debug(args);
+    console.log(args)
+        //let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.session.username, req.session.orgName);
+        //res.send(message);
 });
 
 // //  Query Get Block by BlockNumber
