@@ -454,11 +454,11 @@ app.get('/getHistoryForData', (req, res) => {
 //Query on chaincode on target peers
 app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, res) {
     logger.debug('==================== QUERY BY CHAINCODE ==================');
-    var channelName = req.params.channelName;
-    var chaincodeName = req.params.chaincodeName;
-    let args = req.query.args;
-    let fcn = req.query.fcn;
-    let peer = req.query.peer;
+    var channelName = req.body.channelName;
+    var chaincodeName = req.body.chaincodeName;
+    let args = req.body.Id; //args as Id
+    let fcn = req.body.fcn;
+    let peer = req.body.peer;
 
     logger.debug('channelName : ' + channelName);
     logger.debug('chaincodeName : ' + chaincodeName);
@@ -485,7 +485,7 @@ app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, 
     args = JSON.parse(args);
     logger.debug(args);
 
-    let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.username, req.orgname);
+    let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.session.username, req.session.orgName);
     res.send(message);
 });
 
