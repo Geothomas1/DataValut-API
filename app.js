@@ -490,7 +490,8 @@ app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, 
     //logger.debug(args);
     //console.log(args)
     let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.session.username, req.session.orgName);
-    res.send(message.TxId);
+    res.render('user/Historyofdata', { 'result': message })
+        //res.json(message);
 });
 
 // //  Query Get Block by BlockNumber
@@ -532,7 +533,7 @@ app.get('/channels/:channelName/transactions/:trxnId', async function(req, res) 
     res.send(message);
 });
 // // Query Get Block by Hash
-// app.get('/channels/:channelName/blocks', async function(req, res) {
+// app.get('/channels/nn:chaelName/blocks', async function(req, res) {
 //     logger.debug('================ GET BLOCK BY HASH ======================');
 //     logger.debug('channelName : ' + req.params.channelName);
 //     let hash = req.query.hash;
