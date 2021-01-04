@@ -482,15 +482,15 @@ app.get('/channels/:channelName/chaincodes/:chaincodeName', async function(req, 
         res.json(getErrorMessage('\'args\''));
         return;
     }
-    console.log(typeof(args))
+    args = JSON.stringify(args)
 
-    //args = args.replace(/'/g, '"');
+    args = args.replace(/'/g, '"');
     //console.log(args)
-    //args = json.parse(args);
-    // logger.debug(args);
-    console.log(args)
-        //let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.session.username, req.session.orgName);
-        //res.send(message);
+    args = JSON.parse(args);
+    //logger.debug(args);
+    //console.log(args)
+    let message = await query.queryChaincode(peer, channelName, chaincodeName, args, fcn, req.session.username, req.session.orgName);
+    res.send(message.TxId);
 });
 
 // //  Query Get Block by BlockNumber
